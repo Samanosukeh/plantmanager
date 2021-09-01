@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, SafeAreaView, Image, TouchableOpacity, Dimensions } from 'react-native';
 
 import wateringImg from '../assets/watering.png';
 import colors from '../styles/colors';
-import { Button } from '../components/Button';
 
 export function Welcome() {
-  const [visible, setVisible] = useState(false);
-
-  function handleVisibility() {
-      setVisible(true);
-  }
-
   return (
     // SafeAreaView leva em consideração apenas a área realmente utilizável da tela
     <SafeAreaView style={styles.container}>
@@ -22,8 +15,7 @@ export function Welcome() {
       </Text>
 
       {
-        visible &&
-        <Image source={wateringImg} style={styles.image} />
+        <Image source={wateringImg} style={styles.image} resizeMode="contain" />
       }
 
       <Text style={styles.subtitle}>
@@ -31,7 +23,12 @@ export function Welcome() {
           Nós cuidamos de lembrar você sempre que precisar.
       </Text>
 
-      <Button title=">" onPress={handleVisibility} />
+      <TouchableOpacity style={styles.button} activeOpacity={0.7} >
+          <Text style={styles.buttonText}>
+              >
+          </Text>
+      </TouchableOpacity>
+      
     </SafeAreaView>
 
   );
@@ -42,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,//ocupar a tela toda
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around', //space-around para não colar o botão nas extremidades
   },
 
   title: {
@@ -60,8 +57,22 @@ const styles = StyleSheet.create({
       color: colors.heading,
   },
 
+  button: {
+    backgroundColor: colors.green,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 16,//px
+    marginBottom: 10,
+    width: 56,
+    height: 56,
+  },
+
+  buttonText: {
+    color: colors.white,
+    fontSize: 24
+  },
+
   image: {
-      width: 292,
-      height: 284,
+      height: Dimensions.get('window').width * 0.7,//pegando as dimensões do dispositivo
   },
 });
